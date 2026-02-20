@@ -1,0 +1,48 @@
+.error-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #1b1b1b, #000);
+  color: #f7f7f7;
+  text-align: center;
+}
+
+.error-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3rem 4rem;
+  border-radius: 14px;
+  box-shadow: 0 1px 15px rgba(182, 181, 181, 0.432);
+  backdrop-filter: blur(6px);
+}
+
+.error-card h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.message {
+  font-size: 1.3rem;
+  opacity: 0.85;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.btn {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  background: #009579;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background: #006653;
+  transform: translateY(-2px);
+}

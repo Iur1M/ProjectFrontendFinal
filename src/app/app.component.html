@@ -1,0 +1,55 @@
+<header class="header">
+  <div class="nav-container">
+    <div class="logo" routerLink="/">
+      <div class="logo-text">
+        <div class="logo-title">MOVIEVERSE</div>
+      </div>
+    </div>
+
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav class="nav">
+      <a routerLink="/">Home</a>
+      <a routerLink="/movies">Movies</a>
+
+      <ng-container *ngIf="!user; else loggedIn">
+        <a routerLink="/register" class="register">Register</a>
+        <a routerLink="/login" class="login">Login</a>
+      </ng-container>
+
+      <ng-template #loggedIn>
+        <div class="avatar-wrapper" (click)="toggleMenu()">
+          <img src="assets/avatar.jpg" class="avatar" />
+
+          <span class="username">
+            {{ user?.firstName }}
+          </span>
+
+          <div class="dropdown" *ngIf="menuOpen">
+            <div
+              class="dropdown-item"
+              routerLink="/activity"
+              (click)="closeMenu()"
+            >
+              Activity history
+            </div>
+
+            <div
+              class="dropdown-item logout-item"
+              (click)="logout()"
+            >
+              Logout
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </nav>
+  </div>
+</header>
+
+<router-outlet></router-outlet>

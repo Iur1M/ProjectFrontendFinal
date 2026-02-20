@@ -1,0 +1,26 @@
+<div class="activity-page">
+  <h1>Activity History</h1>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <div *ngIf="!loading && activities.length === 0" class="empty">
+    No activity yet
+  </div>
+
+  <div class="activity-list">
+    <div class="activity" *ngFor="let a of activities">
+      <img [src]="a.moviePoster" />
+
+      <div class="info">
+        <div class="title">
+          {{ label(a.activityType) }}:
+          <strong>{{ a.movieTitle }}</strong>
+        </div>
+
+        <div class="time">
+          {{ a.createdAt | date:'medium' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

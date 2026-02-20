@@ -1,0 +1,103 @@
+<div class="page" *ngIf="movie">
+  <div class="container">
+    <div class="info">
+      <h1 class="title">{{ movie.title }}</h1>
+
+      <div class="meta-row">
+        <span class="year">{{ movie.year }}</span>
+        <span class="dot">•</span>
+        <span class="rating">
+          <span class="rating-value">{{ movie.rating }}</span>
+          <span class="rating-max">/10</span>
+        </span>
+      </div>
+
+      <div class="meta-list">
+        <div class="meta-item">
+          <span class="label">Director</span>
+          <span class="value">{{ movie.director }}</span>
+        </div>
+
+        <div class="meta-item">
+          <span class="label">Genre</span>
+          <span class="value">{{ movie.genre }}</span>
+        </div>
+      </div>
+
+      <p class="description">
+        {{ movie.description }}
+      </p>
+
+      <div class="buttons">
+        <button class="watch-btn" (click)="watchNow()">
+          ▶ Watch Now
+        </button>
+
+        <button class="back-btn" (click)="goBack()">
+          ← Back to Movies
+        </button>
+        
+      </div>
+    </div>
+
+    <div class="trailer">
+      <iframe
+        [src]="safeTrailerUrl"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>
+<div class="comments-wrapper">
+  <div class="comments">
+    <h2>Comments</h2>
+
+    <div *ngIf="auth.isLoggedIn(); else loginHint" class="comment-form">
+      <textarea
+        [(ngModel)]="newComment"
+        placeholder="Write your comment..."
+      ></textarea>
+
+      <div class="comment-actions">
+        <select [(ngModel)]="newRating">
+          <option *ngFor="let r of [1,2,3,4,5,6,7,8,9,10]" [value]="r">
+            {{ r }}/10
+          </option>
+        </select>
+
+        <button (click)="addComment()">Post</button>
+      </div>
+    </div>
+
+    <ng-template #loginHint>
+      <div class="login-hint">
+        <p>You must be logged in to write a comment.</p>
+        <button (click)="goToLogin()">Login</button>
+      </div>
+    </ng-template>
+
+    <div class="comment" *ngFor="let c of comments">
+      <img src="assets/avatar.jpg" class="avatar" />
+
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="username">{{ c.userName }}</span>
+          <span class="rating">{{ c.rating }}/10</span>
+        </div>
+
+        <p class="comment-text">{{ c.text }}</p>
+
+        <button
+          *ngIf="auth.isAdmin()"
+          class="delete"
+          (click)="deleteComment(c.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
