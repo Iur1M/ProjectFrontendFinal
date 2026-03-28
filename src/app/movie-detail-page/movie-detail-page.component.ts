@@ -9,7 +9,7 @@ import { Comment } from '../shared/models/comment.model';
 @Component({
   selector: 'app-movie-detail-page',
   templateUrl: 'movie-detail-page.component.html',
-  styleUrls: ['movie-detail-page.component.css']
+  styleUrls: ['movie-detail-page.component.css'],
 })
 export class MovieDetailPageComponent {
   movie: any;
@@ -25,16 +25,16 @@ export class MovieDetailPageComponent {
     private commentService: CommentService,
     public auth: AuthService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.api.getMovieById(id).subscribe(movie => {
+    this.api.getMovieById(id).subscribe((movie) => {
       this.movie = movie;
       this.safeTrailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        movie.trailerUrl
+        movie.trailerUrl,
       );
     });
 
@@ -42,7 +42,9 @@ export class MovieDetailPageComponent {
   }
 
   loadComments(movieId: number) {
-    this.commentService.getByMovie(movieId).subscribe(c => (this.comments = c));
+    this.commentService
+      .getByMovie(movieId)
+      .subscribe((c) => (this.comments = c));
   }
 
   addComment() {
@@ -52,9 +54,9 @@ export class MovieDetailPageComponent {
       .create({
         movieId: this.movie.id,
         text: this.newComment,
-        rating: this.newRating
+        rating: this.newRating,
       })
-      .subscribe(c => {
+      .subscribe((c) => {
         this.comments.unshift(c);
         this.newComment = '';
         this.newRating = 8;
@@ -63,13 +65,13 @@ export class MovieDetailPageComponent {
 
   deleteComment(id: number) {
     this.commentService.delete(id).subscribe(() => {
-      this.comments = this.comments.filter(c => c.id !== id);
+      this.comments = this.comments.filter((c) => c.id !== id);
     });
   }
 
   goToLogin() {
-  this.router.navigate(['/login']);
-}
+    this.router.navigate(['/login']);
+  }
 
   watchNow() {
     this.router.navigate(['/']);

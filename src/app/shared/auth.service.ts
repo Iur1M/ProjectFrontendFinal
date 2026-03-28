@@ -14,7 +14,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -29,7 +29,7 @@ export class AuthService {
 
   login(data: any) {
     return this.http.post<User>(`${this.baseUrl}/login`, data).pipe(
-      tap(user => {
+      tap((user) => {
         user.roles = this.getRolesFromToken(user.accessToken);
 
         if (this.isBrowser) {
@@ -37,7 +37,7 @@ export class AuthService {
         }
 
         this.userSubject.next(user);
-      })
+      }),
     );
   }
 
@@ -45,16 +45,16 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
 
- logout(router?: any) {
-  if (this.isBrowser) {
-    localStorage.removeItem('user');
-  }
-  this.userSubject.next(null);
+  logout(router?: any) {
+    if (this.isBrowser) {
+      localStorage.removeItem('user');
+    }
+    this.userSubject.next(null);
 
-  if (router) {
-    router.navigate(['/']);
+    if (router) {
+      router.navigate(['/']);
+    }
   }
-}
 
   isLoggedIn(): boolean {
     return !!this.userSubject.value;
@@ -78,7 +78,8 @@ export class AuthService {
   private getRolesFromToken(token: string): string[] {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const roles = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      const roles =
+        payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
       return Array.isArray(roles) ? roles : roles ? [roles] : [];
     } catch {

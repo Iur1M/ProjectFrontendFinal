@@ -5,45 +5,83 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-movies-page',
   templateUrl: './movies-page.component.html',
-  styleUrls: ['./movies-page.component.css']
+  styleUrls: ['./movies-page.component.css'],
 })
 export class MoviesPageComponent implements OnInit {
   movies: any[] = [];
+
   searchTerm = '';
-  sortBy = '';
-  desc = false;
+  sortBy = 'rating';
+  desc = true;
   selectedYear?: number;
   selectedGenre?: string;
+  sortByOption = 'ratingDesc';
+
+  page = 1;
+  pageSize = 18;
+  totalCount = 0;
 
   years = [
-    1960,1972,1980,1990,1991,1994,1995,1998,1999,2000,2001,
-    2002,2003,2006,2008,2009,2010,2012,2013,2014,2017,2018,2019
+    1960, 1972, 1980, 1990, 1991, 1994, 1995, 1998, 1999, 2000, 2001, 2002,
+    2003, 2006, 2008, 2009, 2010, 2012, 2013, 2014, 2017, 2018, 2019,
   ];
 
   genres = [
-    'Action','Drama','Comedy','Thriller','Horror',
-    'Sci-Fi','Fantasy','Romance','Crime','Animation'
+    'Action',
+    'Drama',
+    'Comedy',
+    'Thriller',
+    'Horror',
+    'Sci-Fi',
+    'Fantasy',
+    'Romance',
+    'Crime',
+    'Animation',
   ];
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.loadMovies();
   }
 
   loadMovies() {
-    this.api.getMovies(
-      this.searchTerm,
-      this.sortBy,
-      this.desc,
-      this.selectedYear,
-      this.selectedGenre
-    ).subscribe(res => {
-      this.movies = res.items ?? res;
-    });
+    this.api
+      .getMovies(
+        this.searchTerm,
+        this.sortBy,
+        this.desc,
+        this.selectedYear,
+        this.selectedGenre,
+        this.page,
+        this.pageSize,
+      )
+      .subscribe((res) => {
+        this.movies = res.items;
+        this.totalCount = res.totalCount;
+      });
+  }
+
+  nextPage() {
+    if (this.page * this.pageSize < this.totalCount) {
+      this.page++;
+      this.loadMovies();
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.page--;
+      this.loadMovies();
+    }
   }
 
   onSortChange(value: string) {
+    this.page = 1;
+
     if (value === 'ratingAsc') {
       this.sortBy = 'rating';
       this.desc = false;
@@ -58,16 +96,22 @@ export class MoviesPageComponent implements OnInit {
   }
 
   onYearChange(year: string) {
+    this.page = 1;
     this.selectedYear = year ? Number(year) : undefined;
     this.loadMovies();
   }
 
   onGenreChange(genre: string) {
+    this.page = 1;
     this.selectedGenre = genre || undefined;
     this.loadMovies();
   }
 
   openDetails(id: number) {
     this.router.navigate(['/movies', id]);
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.totalCount / this.pageSize);
   }
 }

@@ -14,15 +14,15 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'movies', component: MoviesPageComponent },
   { path: 'movies/:id', component: MovieDetailPageComponent },
-  { path: 'activity', component: ActivityPageComponent},
+  { path: 'activity', component: ActivityPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard] },
-  { path: '**', component: ErrorPageComponent }
+  { path: '**', component: ErrorPageComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

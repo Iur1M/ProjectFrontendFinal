@@ -14,18 +14,18 @@ export class ApiService {
     sortBy?: string,
     desc: boolean = false,
     year?: number,
-    genre?: string
+    genre?: string,
+    page: number = 1,
+    pageSize: number = 10,
   ) {
-    let params = new HttpParams().set('pageSize', '50');
+    let params = new HttpParams().set('page', page).set('pageSize', pageSize);
 
     if (search && search.trim()) {
       params = params.set('search', search.trim());
     }
 
     if (sortBy) {
-      params = params
-        .set('sortBy', sortBy)
-        .set('desc', desc.toString());
+      params = params.set('sortBy', sortBy).set('desc', desc.toString());
     }
 
     if (year) {

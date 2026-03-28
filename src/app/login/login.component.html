@@ -1,9 +1,9 @@
 <div class="container">
   <div class="login form">
     <header>Login</header>
-      <div class="error" *ngIf="errorMessage">
-          {{ errorMessage }}
-      </div>
+    <div class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
     <form (ngSubmit)="login()">
       <input
         type="email"
@@ -23,15 +23,12 @@
 
       <a href="#">Forgot password?</a>
 
-      <input
-        type="submit"
-        class="button"
-        value="Login"
-      />
+      <input type="submit" class="button" value="Login" />
     </form>
 
     <div class="signup">
-      <span>Don't have an account?
+      <span
+        >Don't have an account?
         <a routerLink="/register">Signup</a>
       </span>
     </div>

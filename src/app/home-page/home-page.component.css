@@ -5,13 +5,8 @@
   align-items: center;
   text-align: center;
   color: #fff;
-  padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); 
-  width: 100%;
-
+  padding: 40px 20px;
+  min-height: 90vh;
 }
 
 .home h1 {
@@ -26,6 +21,7 @@
   font-size: 1.8rem;
   max-width: 700px;
   opacity: 0.85;
+  margin: 0 auto;
   margin-bottom: 3rem;
 }
 
@@ -47,6 +43,59 @@
   box-shadow: 0 15px 40px rgba(0, 196, 154, 0.4);
 }
 
+.top-movies {
+  margin-top: 5rem;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.top-movies h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-movies h2 i {
+  color: #00c49a;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.movie-card {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.movie-card:hover {
+  transform: scale(1.07);
+}
+
+.poster {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.movie-card:hover .poster {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.movie-title {
+  margin-top: 10px;
+  font-size: 1rem;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .home h1 {
     font-size: 3rem;
@@ -54,5 +103,9 @@
 
   .home p {
     font-size: 1.2rem;
+  }
+
+  .features {
+    gap: 30px;
   }
 }

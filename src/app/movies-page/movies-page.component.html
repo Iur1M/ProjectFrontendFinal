@@ -9,13 +9,13 @@
 
   <div class="filter-bar">
     <select
-      #sortSelect
       class="year-select"
-      (change)="onSortChange(sortSelect.value)"
+      [(ngModel)]="sortByOption"
+      (change)="onSortChange(sortByOption)"
     >
       <option value="">No sorting</option>
-      <option value="ratingAsc">Rating ↑</option>
-      <option value="ratingDesc">Rating ↓</option>
+      <option value="ratingAsc">Lowest rating</option>
+      <option value="ratingDesc">Highest rating</option>
     </select>
 
     <select
@@ -54,9 +54,9 @@
         <div class="badge-4k">4K</div>
 
         <div class="overlay">
-          <p>{{ movie.year }}</p>
-          <p>⭐ {{ movie.rating }}</p>
-          <p>🎬 {{ movie.director }}</p>
+          <p><i class="fas fa-calendar-alt"></i> {{ movie.year }}</p>
+          <p><i class="fas fa-star"></i> {{ movie.rating }}</p>
+          <p><i class="fas fa-film"></i> {{ movie.director }}</p>
         </div>
       </div>
 
@@ -65,4 +65,13 @@
       </div>
     </div>
   </div>
+</div>
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="page === 1">← Prev</button>
+
+  <span>{{ page }} / {{ getTotalPages() }}</span>
+
+  <button (click)="nextPage()" [disabled]="page * pageSize >= totalCount">
+    Next →
+  </button>
 </div>

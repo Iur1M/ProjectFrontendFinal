@@ -4,9 +4,12 @@
       <h1 class="title">{{ movie.title }}</h1>
 
       <div class="meta-row">
-        <span class="year">{{ movie.year }}</span>
-        <span class="dot">•</span>
+        <span class="year">
+          <i class="fas fa-calendar-alt"></i>
+          {{ movie.year }}
+        </span>
         <span class="rating">
+          <i class="fas fa-star"></i>
           <span class="rating-value">{{ movie.rating }}</span>
           <span class="rating-max">/10</span>
         </span>
@@ -30,13 +33,12 @@
 
       <div class="buttons">
         <button class="watch-btn" (click)="watchNow()">
-          ▶ Watch Now
+          <i class="fas fa-play"></i> Watch Now
         </button>
 
         <button class="back-btn" (click)="goBack()">
-          ← Back to Movies
+          <i class="fas fa-arrow-left"></i> Back to Movies
         </button>
-        
       </div>
     </div>
 
@@ -62,7 +64,7 @@
 
       <div class="comment-actions">
         <select [(ngModel)]="newRating">
-          <option *ngFor="let r of [1,2,3,4,5,6,7,8,9,10]" [value]="r">
+          <option *ngFor="let r of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="r">
             {{ r }}/10
           </option>
         </select>
@@ -98,6 +100,5 @@
         </button>
       </div>
     </div>
-
   </div>
 </div>

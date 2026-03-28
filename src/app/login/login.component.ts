@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   email = '';
@@ -14,21 +14,22 @@ export class LoginComponent {
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   login() {
     this.errorMessage = '';
 
-    this.auth.login({
-      email: this.email,
-      password: this.password,
-    }).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: err => {
-        this.errorMessage = err.error?.message || 'Login failed';
-      }
-    });
+    this.auth
+      .login({
+        email: this.email,
+        password: this.password,
+      })
+      .subscribe({
+        next: () => this.router.navigate(['/']),
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Login failed';
+        },
+      });
   }
 }
-
