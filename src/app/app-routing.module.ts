@@ -9,6 +9,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { MovieDetailPageComponent } from './movie-detail-page/movie-detail-page.component';
 import { ActivityPageComponent } from './activity-page/activity-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard] },
+  { path: 'profile', component: ProfilePageComponent },
   { path: '**', component: ErrorPageComponent },
 ];
 

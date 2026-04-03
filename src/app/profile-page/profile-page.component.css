@@ -1,0 +1,207 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+.profile-header {
+  flex: 0 0 320px;
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.user-details {
+  margin-bottom: 35px;
+}
+
+.user-details h2 {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.gender-text {
+  opacity: 0.5;
+  font-size: 1rem;
+  text-transform: capitalize;
+  margin-top: 4px;
+}
+
+.favorite-movie-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.favorite-movie-container .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.poster-slot {
+  width: 160px;
+  height: 240px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.poster-slot:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.fav-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add-btn {
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 200;
+}
+
+.movie-picker {
+  position: absolute;
+  top: 100%;
+  margin-top: 15px;
+  background: #181818;
+  border: 1px solid #333;
+  border-radius: 10px;
+  width: 260px;
+  z-index: 1000;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.picker-header {
+  padding: 12px;
+  font-size: 0.85rem;
+  background: #222;
+  color: #aaa;
+  border-bottom: 1px solid #333;
+}
+
+.picker-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.picker-item {
+  padding: 12px 15px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.picker-item:hover {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.activity-section {
+  flex: 1;
+  max-width: 650px;
+  margin-left: 80px;
+}
+
+.activity-section h3 {
+  font-size: 1.4rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activity {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.activity:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: scale(1.01);
+}
+
+.activity img {
+  width: 48px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.time {
+  font-size: 0.8rem;
+  opacity: 0.4;
+}
+
+.status-msg {
+  padding: 40px;
+  text-align: center;
+  opacity: 0.5;
+  font-style: italic;
+}

@@ -4,6 +4,7 @@ export interface User {
   email: string;
   accessToken: string;
   refreshToken: string;
-
+  favoriteMovieId?: number;
+  favoriteMoviePoster?: string;
   roles?: string[];
 }

@@ -1,17 +1,29 @@
 .admin-container {
-  max-width: 500px;
+  max-width: 1100px;
   margin: 40px auto;
-  padding: 24px;
+  padding: 30px;
   background: #111;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 .admin-container h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.admin-content-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.section-container {
+  flex: 1;
 }
 
 .admin-form {
@@ -23,13 +35,12 @@
 .admin-form input,
 .admin-form select,
 .admin-form textarea {
-  padding: 10px 12px;
+  padding: 12px;
   border-radius: 6px;
   border: 1px solid #333;
   background: #1b1b1b;
   color: #fff;
   font-size: 14px;
-  resize: vertical;
 }
 
 .admin-form input::placeholder,
@@ -37,49 +48,60 @@
   color: #888;
 }
 
-.admin-form select {
-  cursor: pointer;
-}
-
-.admin-form button {
+.add-btn {
   margin-top: 10px;
-  padding: 12px;
+  padding: 14px;
   border-radius: 6px;
   border: none;
   background: #e50914;
   color: #fff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 }
 
-.admin-form button:hover {
+.add-btn:hover {
   background: #b20710;
-}
-
-.movie-list {
-  margin-top: 30px;
 }
 
 .movie-list h2 {
   color: #fff;
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
 }
 
 .movie-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: #1b1b1b;
-  padding: 10px 12px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #222;
+  transition: transform 0.2s;
+}
+
+.movie-item:hover {
+  transform: translateY(-2px);
 }
 
 .movie-item .info {
   color: #fff;
+  margin-bottom: 12px;
+}
+
+.movie-item strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
 }
 
 .movie-item span {
@@ -92,13 +114,30 @@
   background: transparent;
   border: 1px solid #e50914;
   color: #e50914;
-  padding: 6px 10px;
+  padding: 6px 0;
   border-radius: 4px;
   cursor: pointer;
+  text-align: center;
+  font-size: 13px;
   transition: all 0.2s;
 }
 
 .delete-btn:hover {
   background: #e50914;
   color: #fff;
+}
+
+@media (max-width: 850px) {
+  .admin-content-wrapper {
+    flex-direction: column;
+  }
+
+  .section-container {
+    width: 100%;
+  }
+
+  .admin-container {
+    margin: 10px;
+    padding: 15px;
+  }
 }

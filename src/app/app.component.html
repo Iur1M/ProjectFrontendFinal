@@ -1,52 +1,80 @@
-<header class="header">
-  <div class="nav-container">
-    <div class="logo" routerLink="/">
-      <div class="logo-text">
-        <div class="logo-title">MOVIEVERSE</div>
+  <header class="header">
+    <div class="nav-container">
+      <div class="logo" routerLink="/">
+        <div class="logo-text">
+          <div class="logo-title">MOVIEVERSE</div>
+        </div>
       </div>
-    </div>
 
-    <input type="checkbox" id="menu-toggle" />
-    <label for="menu-toggle" class="burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
 
-    <nav class="nav">
-      <a routerLink="/">Home</a>
-      <a routerLink="/movies">Movies</a>
+      <nav class="nav">
+        <a routerLink="/">Home</a>
+        <a routerLink="/movies">Movies</a>
 
-      <ng-container *ngIf="!user; else loggedIn">
-        <a routerLink="/register" class="register">Register</a>
-        <a routerLink="/login" class="login">Login</a>
-      </ng-container>
+        <ng-container *ngIf="!user; else loggedIn">
+          <a routerLink="/register" class="register">Register</a>
+          <a routerLink="/login" class="login">Login</a>
+        </ng-container>
 
-      <ng-template #loggedIn>
-        <div class="avatar-wrapper" (click)="toggleMenu()">
-          <img src="assets/avatar.jpg" class="avatar" />
+        <ng-template #loggedIn>
+          <div class="avatar-wrapper" (click)="toggleMenu()">
+            <img src="assets/avatar.jpg" class="avatar" />
 
-          <span class="username">
-            {{ user?.firstName }}
-          </span>
+            <span class="username">
+              {{ user?.firstName }}
+            </span>
 
-          <div class="dropdown" *ngIf="menuOpen">
-            <div
-              class="dropdown-item"
-              routerLink="/activity"
-              (click)="closeMenu()"
-            >
-              Activity history
-            </div>
+            <div class="dropdown" *ngIf="menuOpen">
+              <div
+                class="dropdown-item"
+                routerLink="/profile"
+                (click)="closeMenu()"
+              >
+                Profile
+              </div>
+              <div
+                class="dropdown-item"
+                routerLink="/activity"
+                (click)="closeMenu()"
+              >
+                Activity history
+              </div>
 
-            <div class="dropdown-item logout-item" (click)="logout()">
-              Logout
+              <div class="dropdown-item logout-item" (click)="logout()">
+                Logout
+              </div>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </nav>
-  </div>
-</header>
+        </ng-template>
+      </nav>
+    </div>
+  </header>
 
-<router-outlet></router-outlet>
+  <div [@routeAnimation]="router.url">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>MOVIEVERSE</h3>
+        <p>Discover, rate and explore movies</p>
+      </div>
+
+      <div class="footer-links">
+        <a routerLink="/">Home</a>
+        <a routerLink="/movies">Movies</a>
+        <a routerLink="/activity">Activity</a>
+      </div>
+
+      <div class="footer-right">
+        <p>© 2026 Movieverse</p>
+      </div>
+    </div>
+  </footer>

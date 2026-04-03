@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, tap, Observable } from 'rxjs';
 import { User } from './models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = 'https://localhost:7220/api/auth';
+  private usersUrl = 'https://localhost:7220/api/users';
   private isBrowser: boolean;
 
   private userSubject = new BehaviorSubject<User | null>(null);
@@ -24,6 +25,26 @@ export class AuthService {
         user.roles = this.getRolesFromToken(user.accessToken);
         this.userSubject.next(user);
       }
+    }
+  }
+
+  updateFavoriteMovie(movieId: number): Observable<any> {
+    return this.http
+      .patch(`${this.usersUrl}/favorite-movie/${movieId}`, {})
+      .pipe(
+        tap(() => {
+          const currentUser = this.userSubject.value;
+          if (currentUser) {
+            currentUser.favoriteMovieId = movieId;
+            this.updateStorage(currentUser);
+          }
+        }),
+      );
+  }
+  private updateStorage(user: User) {
+    if (this.isBrowser) {
+      localStorage.setItem('user', JSON.stringify(user));
+      this.userSubject.next(user);
     }
   }
 
@@ -85,5 +106,12 @@ export class AuthService {
     } catch {
       return [];
     }
+  }
+
+  updateLocalUser(updatedUser: User) {
+    if (this.isBrowser) {
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
+    this.userSubject.next(updatedUser);
   }
 }

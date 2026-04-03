@@ -1,0 +1,50 @@
+<div class="profile">
+  <div class="profile-header">
+    <img [src]="user?.avatarUrl || 'assets/avatar.jpg'" class="avatar" />
+
+    <div class="user-details">
+      <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+      <p class="gender-text">{{ user?.gender }}</p>
+    </div>
+
+    <div class="favorite-movie-container">
+      <p class="label">Favorite Movie</p>
+      <div class="poster-slot" (click)="toggleMoviePicker()">
+        <img *ngIf="user?.favoriteMoviePoster" [src]="user.favoriteMoviePoster" class="fav-poster" />
+        <div *ngIf="!user?.favoriteMoviePoster" class="add-btn">+</div>
+      </div>
+
+      <div class="movie-picker" *ngIf="showMoviePicker">
+        <div class="picker-header">Select a Movie</div>
+        <div class="picker-list">
+          <div *ngFor="let m of allMovies" (click)="selectFavorite(m)" class="picker-item">
+            {{ m.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-section">
+    <h3>Recent Activity</h3>
+
+    <div *ngIf="loading" class="status-msg">Loading...</div>
+    <div *ngIf="!loading && activities.length === 0" class="status-msg">No activity yet</div>
+
+    <div class="activity-list" *ngIf="!loading">
+      <div class="activity" *ngFor="let a of activities">
+        <img [src]="a.moviePoster" alt="Poster" />
+
+        <div class="info">
+          <div>
+            {{ label(a.activityType) }}:
+            <strong>{{ a.movieTitle }}</strong>
+          </div>
+          <div class="time">
+            {{ a.createdAt | date: "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

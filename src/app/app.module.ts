@@ -14,6 +14,9 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { MovieDetailPageComponent } from './movie-detail-page/movie-detail-page.component';
 import { ActivityPageComponent } from './activity-page/activity-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -26,12 +29,15 @@ import { ActivityPageComponent } from './activity-page/activity-page.component';
     AdminPageComponent,
     MovieDetailPageComponent,
     ActivityPageComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    CommonModule
   ],
   providers: [
     provideClientHydration(),
