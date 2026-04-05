@@ -1,29 +1,24 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-interface Movie {
-  id: number;
-  title: string;
-  year: number;
-  rating: number;
-  director: string;
-  genre: string;
-  posterUrl: string;
-  trailerUrl?: string;
-  description: string;
-}
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.css']
+  styleUrls: ['./admin-page.component.css'],
 })
 export class AdminPageComponent {
-  private baseUrl = 'https://localhost:7220/api/movie';
+  private movieUrl = 'https://localhost:7220/api/movie';
+  private commentUrl = 'https://localhost:7220/api/comments';
+  private userUrl = 'https://localhost:7220/api/users';
 
-  movies: Movie[] = [];
+  tab: 'add' | 'movies' | 'comments' | 'users' = 'add';
 
-  genres: string[] = [
+  movies: any[] = [];
+  comments: any[] = [];
+  users: any[] = [];
+
+  genres = [
     'Action',
     'Drama',
     'Comedy',
@@ -33,7 +28,7 @@ export class AdminPageComponent {
     'Fantasy',
     'Romance',
     'Crime',
-    'Animation'
+    'Animation',
   ];
 
   movie = {
@@ -44,37 +39,84 @@ export class AdminPageComponent {
     genre: '',
     posterUrl: '',
     trailerUrl: '',
-    description: ''
+    description: '',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadMovies();
   }
 
+  setTab(tab: any) {
+    this.tab = tab;
+
+    if (tab === 'movies') this.loadMovies();
+    if (tab === 'comments') this.loadComments();
+    if (tab === 'users') this.loadUsers();
+  }
+
   loadMovies() {
-    this.http.get<any>(this.baseUrl).subscribe(res => {
+    this.http.get<any>(this.movieUrl).subscribe((res) => {
       this.movies = res.items ?? res;
     });
   }
 
   addMovie() {
-    this.http.post(this.baseUrl, this.movie).subscribe({
-      next: () => {
-        this.loadMovies();
-        this.resetForm();
-      },
-      error: err => alert(err.error?.message || 'Failed to add movie')
+    this.http.post(this.movieUrl, this.movie).subscribe(() => {
+      this.loadMovies();
+      this.resetForm();
+    });
+  }
+
+  updateMovie(movie: any) {
+    this.http.put(`${this.movieUrl}/${movie.id}`, movie).subscribe(() => {
+      alert('Updated');
     });
   }
 
   deleteMovie(id: number) {
-    if (!confirm('Delete this movie?')) return;
+    if (!confirm('Delete movie?')) return;
 
-    this.http.delete(`${this.baseUrl}/${id}`).subscribe({
-      next: () => this.movies = this.movies.filter(m => m.id !== id),
-      error: err => alert(err.error?.message || 'Delete failed')
+    this.http.delete(`${this.movieUrl}/${id}`).subscribe(() => {
+      this.movies = this.movies.filter((m) => m.id !== id);
+    });
+  }
+
+  goToMovie(id: number) {
+    this.router.navigate(['/movies', id]);
+  }
+
+  loadComments() {
+    this.http.get<any[]>(`${this.commentUrl}/all`).subscribe((res) => {
+      this.comments = res;
+    });
+  }
+
+  deleteComment(id: number) {
+    this.http.delete(`${this.commentUrl}/${id}`).subscribe(() => {
+      this.comments = this.comments.filter((c) => c.id !== id);
+    });
+  }
+
+  loadUsers() {
+    this.http.get<any>('https://localhost:7220/api/users/all').subscribe({
+      next: (res) => (this.users = res),
+      error: (err) => console.error(err),
+    });
+  }
+
+  banUser(id: string) {
+    if (!confirm('Ban this user?')) return;
+
+    this.http.delete(`https://localhost:7220/api/users/${id}`).subscribe({
+      next: () => {
+        this.users = this.users.filter((u) => u.id !== id);
+      },
+      error: (err) => alert(err.error?.message || 'Delete failed'),
     });
   }
 
@@ -87,7 +129,7 @@ export class AdminPageComponent {
       genre: '',
       posterUrl: '',
       trailerUrl: '',
-      description: ''
+      description: '',
     };
   }
 }
