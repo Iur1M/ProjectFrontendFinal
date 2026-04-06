@@ -16,6 +16,8 @@ export class MovieDetailPageComponent {
   comments: Comment[] = [];
   newComment = '';
   newRating = 8;
+  editingCommentId: number | null = null;
+  editContent: string = '';
 
   safeTrailerUrl!: SafeResourceUrl;
 
@@ -80,4 +82,13 @@ export class MovieDetailPageComponent {
   goBack() {
     this.router.navigate(['/movies']);
   }
+
+  likeComment(c: Comment) {
+  this.commentService.like(c.id).subscribe(res => {
+    c.likes = res.likes;
+  });
+  
+}
+
+
 }

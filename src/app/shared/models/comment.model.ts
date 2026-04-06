@@ -5,4 +5,6 @@ export interface Comment {
   userName: string;
   userId: string;
   createdAt: string;
+  likes: number;
+  isLiked?: boolean;
 }

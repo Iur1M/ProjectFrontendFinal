@@ -23,4 +23,11 @@ export class CommentService {
   delete(id: number) {
     return this.http.delete(`${this.api}/${id}`);
   }
+
+  like(commentId: number) {
+  return this.http.post<{ likes: number }>(
+    `${this.api}/${commentId}/like`,
+    {}
+  );
+}
 }

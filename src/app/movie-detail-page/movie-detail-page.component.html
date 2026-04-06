@@ -52,6 +52,7 @@
     </div>
   </div>
 </div>
+
 <div class="comments-wrapper">
   <div class="comments">
     <h2>Comments</h2>
@@ -68,7 +69,6 @@
             {{ r }}/10
           </option>
         </select>
-
         <button (click)="addComment()">Post</button>
       </div>
     </div>
@@ -86,18 +86,25 @@
       <div class="comment-body">
         <div class="comment-header">
           <span class="username">{{ c.userName }}</span>
-          <span class="rating">{{ c.rating }}/10</span>
+          <span class="rating"><i class="fas fa-star"></i> {{ c.rating }}/10</span>
         </div>
 
         <p class="comment-text">{{ c.text }}</p>
 
-        <button
-          *ngIf="auth.isAdmin()"
-          class="delete"
-          (click)="deleteComment(c.id)"
-        >
-          Delete
-        </button>
+        <div class="comment-footer">
+          <button class="like-btn" (click)="likeComment(c)" [class.liked]="c.isLiked">
+            <i class="fas fa-heart"></i>
+            <span class="likes-count">{{ c.likes }}</span>
+          </button>
+
+          <button
+            *ngIf="auth.isAdmin()"
+            class="delete-btn"
+            (click)="deleteComment(c.id)"
+          >
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
