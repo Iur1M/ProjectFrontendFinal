@@ -16,8 +16,7 @@ export class MovieDetailPageComponent {
   comments: Comment[] = [];
   newComment = '';
   newRating = 8;
-  editingCommentId: number | null = null;
-  editContent: string = '';
+  suggestedMovies: any[] = [];
 
   safeTrailerUrl!: SafeResourceUrl;
 
@@ -31,17 +30,42 @@ export class MovieDetailPageComponent {
   ) {}
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      
+      if (id) {
+        this.loadMovie(id);
+        this.loadComments(id);
+        this.loadSuggestedMovies(id);
+      }
+    });
+  }
 
+  loadMovie(id: number) {
     this.api.getMovieById(id).subscribe((movie) => {
       this.movie = movie;
       this.safeTrailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
         movie.trailerUrl,
       );
     });
-
-    this.loadComments(id);
   }
+
+loadSuggestedMovies(currentMovieId: number) {
+  this.api.getMovies().subscribe((response: any) => {
+    let moviesArray = Array.isArray(response)
+      ? response
+      : response.items || response.data || [];
+
+    const filtered = moviesArray.filter((m: any) => m.id !== currentMovieId);
+
+    for (let i = filtered.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+    }
+
+    this.suggestedMovies = filtered.slice(0, 10);
+  });
+}
 
   loadComments(movieId: number) {
     this.commentService
@@ -70,6 +94,14 @@ export class MovieDetailPageComponent {
       this.comments = this.comments.filter((c) => c.id !== id);
     });
   }
+  canDelete(c: Comment): boolean {
+    if (!this.auth.isLoggedIn()) return false;
+
+    const currentUserId = this.auth.getUserId();
+    const isAdmin = this.auth.isAdmin();
+
+    return isAdmin || (currentUserId !== null && c.userId === currentUserId);
+  }
 
   goToLogin() {
     this.router.navigate(['/login']);
@@ -84,11 +116,8 @@ export class MovieDetailPageComponent {
   }
 
   likeComment(c: Comment) {
-  this.commentService.like(c.id).subscribe(res => {
-    c.likes = res.likes;
-  });
-  
-}
-
-
+    this.commentService.like(c.id).subscribe((res) => {
+      c.likes = res.likes;
+    });
+  }
 }

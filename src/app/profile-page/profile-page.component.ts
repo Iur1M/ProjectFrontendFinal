@@ -38,18 +38,19 @@ export class ProfilePageComponent implements OnInit {
     this.showMoviePicker = !this.showMoviePicker;
   }
 
-  selectFavorite(movie: any) {
-    this.auth.updateFavoriteMovie(movie.id).subscribe({
-      next: () => {
-        if (this.user) {
-          this.user.favoriteMoviePoster = movie.posterUrl;
-          this.auth.updateLocalUser(this.user);
-        }
-        this.showMoviePicker = false;
-      },
-      error: (err) => console.error('Update failed:', err),
-    });
-  }
+ selectFavorite(movie: any) {
+  this.auth.updateFavoriteMovie(movie.id).subscribe({
+    next: () => {
+      if (this.user) {
+        this.user.favoriteMoviePoster = movie.posterUrl; 
+        this.user.favoriteMovieId = movie.id;
+        
+        this.auth.updateLocalUser(this.user); 
+      }
+      this.showMoviePicker = false;
+    }
+  });
+}
 
   label(type: string) {
     return type === 'View' ? 'Viewed' : 'Commented';

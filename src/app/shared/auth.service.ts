@@ -49,19 +49,25 @@ export class AuthService {
   }
 
   login(data: any) {
-    return this.http.post<User>(`${this.baseUrl}/login`, data).pipe(
-      tap((user) => {
-        user.roles = this.getRolesFromToken(user.accessToken);
+  return this.http.post<User>(`${this.baseUrl}/login`, data).pipe(
+    tap((user) => {
+      user.roles = this.getRolesFromToken(user.accessToken);
 
-        if (this.isBrowser) {
-          localStorage.setItem('user', JSON.stringify(user));
-        }
+      if (this.isBrowser) {
+        localStorage.setItem('user', JSON.stringify(user));
+      }
 
-        this.userSubject.next(user);
-      }),
-    );
-  }
+      this.userSubject.next(user);
 
+      this.http.get<User>(`${this.usersUrl}/me`).subscribe(fullUser => {
+        fullUser.roles = user.roles;
+        fullUser.accessToken = user.accessToken;
+
+        this.updateLocalUser(fullUser);
+      });
+    })
+  );
+}
   register(data: any) {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
@@ -113,5 +119,24 @@ export class AuthService {
       localStorage.setItem('user', JSON.stringify(updatedUser));
     }
     this.userSubject.next(updatedUser);
+  }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      return (
+        payload['unique_name'] ||
+        payload['sub'] ||
+        payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+        ] ||
+        null
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }

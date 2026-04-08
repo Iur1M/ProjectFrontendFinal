@@ -52,7 +52,27 @@
     </div>
   </div>
 </div>
+<div class="gallery-section">
+  <h2 class="gallery-title">Check out more</h2>
+  
+  <div class="movie-gallery">
+    <div class="gallery-track">
+      <div class="gallery-item"
+           *ngFor="let sm of suggestedMovies"
+           [routerLink]="['/movies', sm.id]">
+        <img [src]="sm.posterUrl" class="gallery-poster" />
+        <p class="gallery-item-title">{{ sm.title }}</p>
+      </div>
 
+      <div class="gallery-item"
+           *ngFor="let sm of suggestedMovies"
+           [routerLink]="['/movies', sm.id]">
+        <img [src]="sm.posterUrl" class="gallery-poster" />
+        <p class="gallery-item-title">{{ sm.title }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="comments-wrapper">
   <div class="comments">
     <h2>Comments</h2>
@@ -86,19 +106,25 @@
       <div class="comment-body">
         <div class="comment-header">
           <span class="username">{{ c.userName }}</span>
-          <span class="rating"><i class="fas fa-star"></i> {{ c.rating }}/10</span>
+          <span class="rating"
+            ><i class="fas fa-star"></i> {{ c.rating }}/10</span
+          >
         </div>
 
         <p class="comment-text">{{ c.text }}</p>
 
         <div class="comment-footer">
-          <button class="like-btn" (click)="likeComment(c)" [class.liked]="c.isLiked">
+          <button
+            class="like-btn"
+            (click)="likeComment(c)"
+            [class.liked]="c.isLiked"
+          >
             <i class="fas fa-heart"></i>
             <span class="likes-count">{{ c.likes }}</span>
           </button>
 
           <button
-            *ngIf="auth.isAdmin()"
+            *ngIf="canDelete(c)"
             class="delete-btn"
             (click)="deleteComment(c.id)"
           >
