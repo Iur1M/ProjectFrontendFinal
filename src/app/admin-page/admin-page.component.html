@@ -60,13 +60,27 @@
 
           <div class="input-group">
             <label>Director</label>
+
             <input
               type="text"
-              placeholder="Christopher Nolan"
               [(ngModel)]="movie.director"
+              (input)="filterDirectors()"
+              (focus)="onFocus()"
+              (blur)="hideDropdown()"
+              placeholder="Select or type director..."
               name="director"
               required
             />
+
+            <div class="dropdown" *ngIf="showDropdown">
+              <div
+                class="dropdown-item"
+                *ngFor="let d of filteredDirectors"
+                (click)="selectDirector(d)"
+              >
+                {{ d }}
+              </div>
+            </div>
           </div>
 
           <div class="input-group">
@@ -146,32 +160,32 @@
     </div>
 
     <div *ngIf="tab === 'comments'" class="section-container">
-  <h2>All Comments</h2>
-  <div class="list-grid">
-    <div class="list-item comment-card" *ngFor="let c of comments">
-      <div class="info">
-        <div class="comment-header">
-          <label>User: {{ c.userName }}</label>
-          <span class="rating-badge">{{ c.rating }}/10</span>
-        </div>
+      <h2>All Comments</h2>
+      <div class="list-grid">
+        <div class="list-item comment-card" *ngFor="let c of comments">
+          <div class="info">
+            <div class="comment-header">
+              <label>User: {{ c.userName }}</label>
+              <span class="rating-badge">{{ c.rating }}/10</span>
+            </div>
 
-        <div class="movie-link" (click)="goToMovie(c.movieId)">
-          <i class="fas fa-film"></i> {{ c.movieTitle }}
-        </div>
+            <div class="movie-link" (click)="goToMovie(c.movieId)">
+              <i class="fas fa-film"></i> {{ c.movieTitle }}
+            </div>
 
-        <div class="comment-body">
-          <p class="comment-text">"{{ c.text }}"</p>
-        </div>
-      </div>
+            <div class="comment-body">
+              <p class="comment-text">"{{ c.text }}"</p>
+            </div>
+          </div>
 
-      <div class="item-actions">
-        <button class="delete-btn" (click)="deleteComment(c.id)">
-          Remove Comment
-        </button>
+          <div class="item-actions">
+            <button class="delete-btn" (click)="deleteComment(c.id)">
+              Remove Comment
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
     <div *ngIf="tab === 'users'" class="section-container">
       <div class="list-grid">

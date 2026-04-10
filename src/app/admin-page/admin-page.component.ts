@@ -17,6 +17,9 @@ export class AdminPageComponent {
   movies: any[] = [];
   comments: any[] = [];
   users: any[] = [];
+  directors: string[] = [];
+  filteredDirectors: string[] = [];
+  showDropdown: boolean = false;
 
   genres = [
     'Action',
@@ -49,6 +52,7 @@ export class AdminPageComponent {
 
   ngOnInit() {
     this.loadMovies();
+    this.loadDirectors();
   }
 
   setTab(tab: any) {
@@ -132,4 +136,35 @@ export class AdminPageComponent {
       description: '',
     };
   }
+
+  loadDirectors() {
+    this.http.get<string[]>(`${this.movieUrl}/directors`).subscribe((res) => {
+      this.directors = res;
+      this.filteredDirectors = res;
+    });
+  }
+
+  filterDirectors() {
+  const value = this.movie.director?.toLowerCase() || '';
+
+  this.filteredDirectors = this.directors.filter(d =>
+    d.toLowerCase().includes(value)
+  );
+}
+
+onFocus() {
+  this.showDropdown = true;
+  this.filteredDirectors = this.directors;
+}
+
+selectDirector(director: string) {
+  this.movie.director = director;
+  this.showDropdown = false;
+}
+
+hideDropdown() {
+  setTimeout(() => {
+    this.showDropdown = false;
+  }, 200);
+}
 }

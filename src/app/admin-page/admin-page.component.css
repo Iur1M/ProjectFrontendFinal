@@ -239,6 +239,26 @@ textarea:focus {
   font-size: 0.85rem;
 }
 
+.dropdown {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+
+.dropdown-item {
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.dropdown-item:hover {
+  background: #333;
+  color: #fff;
+}
+
 @media (max-width: 768px) {
   .list-grid {
     grid-template-columns: 1fr;
